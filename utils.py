@@ -4,6 +4,16 @@ import pandas as pd
 import re
 import config
 
+# Dictionary of host names and URLs that point to codon usage index text files.
+# Codon usage database: http://www.kazusa.or.jp/codon/
+codon_usage_index_urls = {
+                        "chicken" : "http://www.kazusa.or.jp/codon/current/species/208526",
+                        "bovine" : "http://www.kazusa.or.jp/codon/current/species/9913",
+                        "swine" : "http://www.kazusa.or.jp/codon/current/species/9823",
+                        "duck" : "http://www.kazusa.or.jp/codon/current/species/8839",
+                        "human" : "http://www.kazusa.or.jp/codon/current/species/9606"
+}
+
 # List of all subtypes for H5 influenza A.
 subtypes = [
                         "H5N1",
