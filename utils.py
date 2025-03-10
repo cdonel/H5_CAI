@@ -117,6 +117,11 @@ human_host_names = [
                         'zhejiang'
 ]
 
+# Write to text file.
+def write_txt(path, data):
+    with open(path, 'w') as text_file:
+        text_file.write(data)
+
 # Read fasta sequences into list. Each element is a biopython seqrecord.
 def read_fasta(path):
     seq_records = []
