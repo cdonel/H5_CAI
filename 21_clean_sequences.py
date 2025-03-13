@@ -10,7 +10,6 @@ def main():
         # List size equal to number of sequences. Filled with False values by default. If sequence
         # meets criteria then false will be changed to True.
         keep_records = [False] * len(seq_records) 
-
         keep_records = check_sequence_start(seq_records, keep_records) # Check for start codon.
         keep_records = check_sequence_end(seq_records, keep_records) # Check for stop codon.
         keep_records = check_sequence_triplet(seq_records, keep_records) # Check sequence length divisible by 3.
