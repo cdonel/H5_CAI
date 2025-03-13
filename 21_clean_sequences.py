@@ -15,6 +15,7 @@ def main():
         keep_records = check_sequence_end(seq_records, keep_records) # Check for stop codon.
         keep_records = check_sequence_triplet(seq_records, keep_records) # Check sequence length divisible by 3.
         keep_records = keep_term(seq_records, keep_records, term=H5) # Check for subtype term in sequence description.
+        keep_records = keep_term(seq_records, keep_records, term='Influenza A virus') # Check for subtype term in sequence description.
 
         # Where keep_records element is True add sequence to new_seq_records.
         new_seq_records = filter_seq_records(seq_records, keep_records) 
