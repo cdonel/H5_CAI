@@ -162,15 +162,55 @@ def csv_to_df(path):
     return pd.read_csv(path)
 
 # Scores to dataframe
-def cai_scores_to_df(scores, subtype, host):
+def cai_scores_to_df(scores, subtype, host, genes):
     df = pd.DataFrame(columns=['cai_score'], data=scores)
     df['subtype'] = subtype
     df['host'] = host
+    df['gene'] = genes
     return df
 
 # Takes list of dataframes and concatenates into single datafarame
 def concat_df(list_df):
     return pd.concat(list_df, ignore_index=True)
+
+# Extracts gene name from sequence description and returns list 
+def get_H5_gene_names(seq_records):
+    genes = [] # empty list for holding gene name ex. HA
+    for record in seq_records:
+        x =  re.split(r".*?\(.*?\(.*?\)\)\s", record.description) # split everything before gene name
+        x = list(filter(None, x)) # remove empty strings from list
+        y = re.split(r',\s(?:partial|complete)\scds', x[0]) # split everything after gene name
+        y = list(filter(None, y)) # remove empty strings from list
+        gene = y[0]
+        
+        if re.search(r'hemagglutinin|\(HA\)', gene): # if hemagglutinin OR (HA) is found in gene append HA to genes list
+            genes.append('HA')
+
+        elif re.search(r'neuraminidase|\(NA\)', gene): # if neuraminidase OR (NA) is found in gene append NA to genes list
+            genes.append('NA')
+
+        elif re.search(r'matrix protein', gene): # if matrix protein is found in gene append MP to genes list
+            genes.append('MP')
+
+        elif re.search(r'structural', gene): # if structural is found in gene append NS to genes list
+            genes.append('NS')
+
+        elif re.search(r'PB1', gene): # if PB1 is found in gene append PB1 to genes list
+            genes.append('PB1')
+
+        elif re.search(r'PB2', gene): # if PB2 is found in gene append PB2 to genes list
+            genes.append('PB2')
+
+        elif re.search(r'\(PA\)', gene): # if PA is found in gene append PA to genes list
+            genes.append('PA')
+
+        elif re.search(r'\(NP\)', gene): # if NP is found in gene append NP to genes list
+            genes.append('NP')
+            
+        else:
+            genes.append("No gene") # if no gene was found above add No gene to genes list
+
+    return genes
 
 # Standardize host name.
 # Supported host types: duck, chicken, swine, bovine, and human.
@@ -241,4 +281,22 @@ def standarize_host(record_description,
             record_description = re.sub(r'Influenza A virus', 'Influenza A virus human', record_description)
             return record_description
 
-    
+# Goes through each cleaned fasta file for each H5 subtypes and extracts gene name, subtype, and accession
+# Writes dataframe to csv
+def write_subtype_genes():
+    subtype_genes = pd.DataFrame(columns=['subtype', 'gene', 'accession']) # empty dataframe to hold subtype, gene, and accession.
+    write_path = "data/subtype_sequences/meta/subtype_genes.csv" # write file destination
+
+    for H5 in subtypes: # for each H5 subtype
+        read_path = "data/subtype_sequences/{0}/01_{0}.fasta".format(H5) # input file location
+        seq_records = read_fasta(read_path) # read fasta file
+
+        for record in seq_records:
+            x =  re.split(r".*?\(.*?\(.*?\)\)\s", record.description) # split everything before gene name
+            x = list(filter(None, x)) # remove empty strings from list
+            y = re.split(r',\s(?:partial|complete)\scds', x[0]) # split everything after gene name
+            y = list(filter(None, y)) # remove empty strings from list
+            df = pd.DataFrame([{'subtype':H5, 'gene':y[0], 'accession':record.name}])
+            subtype_genes = pd.concat([df, subtype_genes], ignore_index=True) # add subtype, gene, and accession
+
+    df_to_csv(subtype_genes, write_path) # write to dataframe to csv
