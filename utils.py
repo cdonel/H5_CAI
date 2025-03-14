@@ -3,6 +3,7 @@ from Bio import Entrez
 import pandas as pd
 import re
 import config
+import openpyxl
 
 # Dictionary of host names and URLs that point to codon usage index text files.
 # Codon usage database: http://www.kazusa.or.jp/codon/
@@ -156,6 +157,10 @@ def read_genbank(path):
 # Write dataframe to CSV.
 def df_to_csv(df, path):
     df.to_csv(path, index=False)
+
+# Write dataframe to excel.
+def df_to_xlsx(df, path):
+    df.to_excel(path, index=True)
 
 # Read CSV to datafrmae
 def csv_to_df(path):
