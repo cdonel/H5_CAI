@@ -159,7 +159,7 @@ def df_to_csv(df, path):
 
 # Read CSV to datafrmae
 def csv_to_df(path):
-    return pd.read_csv(path)
+    return pd.read_csv(path, keep_default_na=False, na_values=[None])
 
 # Scores to dataframe
 def cai_scores_to_df(scores, subtype, host, genes):
@@ -183,28 +183,34 @@ def get_H5_gene_names(seq_records):
         y = list(filter(None, y)) # remove empty strings from list
         gene = y[0]
         
-        if re.search(r'hemagglutinin|\(HA\)', gene): # if hemagglutinin OR (HA) is found in gene append HA to genes list
+        if re.search('hemagglutinin', gene, re.IGNORECASE): # if hemagglutinin is found in gene append HA to genes list
             genes.append('HA')
 
-        elif re.search(r'neuraminidase|\(NA\)', gene): # if neuraminidase OR (NA) is found in gene append NA to genes list
+        elif re.search('(HA)', gene, re.IGNORECASE): # if (HA) is found in gene append HA to genes list
+            genes.append('HA')
+
+        elif re.search('neuraminidase', gene, re.IGNORECASE): # if neuraminidase is found in gene append NA to genes list
             genes.append('NA')
 
-        elif re.search(r'matrix protein', gene): # if matrix protein is found in gene append MP to genes list
+        elif re.search('(NA)', gene, re.IGNORECASE): # if (NA) is found in gene append NA to genes list
+            genes.append('NA')
+
+        elif re.search('matrix protein', gene, re.IGNORECASE): # if matrix protein is found in gene append MP to genes list
             genes.append('MP')
 
-        elif re.search(r'structural', gene): # if structural is found in gene append NS to genes list
+        elif re.search('structural', gene, re.IGNORECASE): # if structural is found in gene append NS to genes list
             genes.append('NS')
 
-        elif re.search(r'PB1', gene): # if PB1 is found in gene append PB1 to genes list
+        elif re.search('PB1', gene, re.IGNORECASE): # if PB1 is found in gene append PB1 to genes list
             genes.append('PB1')
 
-        elif re.search(r'PB2', gene): # if PB2 is found in gene append PB2 to genes list
+        elif re.search('PB2', gene, re.IGNORECASE): # if PB2 is found in gene append PB2 to genes list
             genes.append('PB2')
 
-        elif re.search(r'\(PA\)', gene): # if PA is found in gene append PA to genes list
+        elif re.search('(PA)', gene, re.IGNORECASE): # if PA is found in gene append PA to genes list
             genes.append('PA')
 
-        elif re.search(r'\(NP\)', gene): # if NP is found in gene append NP to genes list
+        elif re.search('(NP)', gene, re.IGNORECASE): # if NP is found in gene append NP to genes list
             genes.append('NP')
             
         else:
