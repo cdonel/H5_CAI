@@ -3,7 +3,7 @@ from Bio import Entrez
 import pandas as pd
 import re
 import config
-import openpyxl
+from scipy.stats import mannwhitneyu
 
 # Dictionary of host names and URLs that point to codon usage index text files.
 # Codon usage database: http://www.kazusa.or.jp/codon/
@@ -311,3 +311,159 @@ def write_subtype_genes():
             subtype_genes = pd.concat([df, subtype_genes], ignore_index=True) # add subtype, gene, and accession
 
     df_to_csv(subtype_genes, write_path) # write to dataframe to csv
+
+# Subtypes: H5N1, H5N2, H5N6, H5N8
+# Host: chicken
+# Test: Mann-Whitney U rank
+def test_chicken(dataframe):
+    
+    H5N1_sample = dataframe[dataframe["subtype"].str.contains("H5N1") == True] # filter for H5N1 
+    H5N2_sample = dataframe[dataframe["subtype"].str.contains("H5N2") == True] # filter for H5N2
+    H5N6_sample = dataframe[dataframe["subtype"].str.contains("H5N6") == True] # filter for H5N6 
+    H5N8_sample = dataframe[dataframe["subtype"].str.contains("H5N8") == True] # filter for H5N8 
+
+    H5N1_H5N2_U1, H5N1_H5N2_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N2_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N1_H5N8_U1, H5N1_H5N8_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N8
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+
+    H5N2_H5N6_U1, H5N2_H5N6_p = mannwhitneyu(H5N2_sample['cai_score'].to_list(), # perform rank sum test between H5N2 and H5N6
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N2_H5N8_U1, H5N2_H5N8_p = mannwhitneyu(H5N2_sample['cai_score'].to_list(), # perform rank sum test between H5N2 and H5N8
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+
+    H5N6_H5N8_U1, H5N6_H5N8_p = mannwhitneyu(H5N6_sample['cai_score'].to_list(), # perform rank sum test between H5N6 and H5N8
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    gene = pd.unique(dataframe['gene'])[0]
+
+    stats = [                           # list containing tupes with each subtype sample and p value
+        ('H5N1', 'H5N2', H5N1_H5N2_p),
+        ('H5N1', 'H5N6', H5N1_H5N6_p),
+        ('H5N1', 'H5N8', H5N1_H5N8_p),
+        ('H5N2', 'H5N6', H5N2_H5N6_p),
+        ('H5N2', 'H5N8', H5N2_H5N8_p),
+        ('H5N6', 'H5N8', H5N6_H5N8_p)
+        ]
+
+    return stats
+
+# Subtypes: H5N1 and H5N6
+# Host: human
+# Test: Mann-Whitney U rank
+def test_human(dataframe):
+    
+    H5N1_sample = dataframe[dataframe["subtype"].str.contains("H5N1") == True] # filter for H5N1 
+    H5N6_sample = dataframe[dataframe["subtype"].str.contains("H5N6") == True] # filter for H5N6 
+
+    H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    
+    gene = pd.unique(dataframe['gene'])[0]
+
+    stats = [('H5N1', 'H5N6', H5N1_H5N6_p)] # list containing tupes with each subtype sample and p value
+
+    return stats
+
+# Subtypes: H5N1, H5N2, H5N3, H5N6, H5N8
+# Host: duck
+# Test: Mann-Whitney U rank
+def test_duck(dataframe):
+    
+    H5N1_sample = dataframe[dataframe["subtype"].str.contains("H5N1") == True] # filter for H5N1 
+    H5N2_sample = dataframe[dataframe["subtype"].str.contains("H5N2") == True] # filter for H5N2
+    H5N3_sample = dataframe[dataframe["subtype"].str.contains("H5N3") == True] # filter for H5N3
+    H5N6_sample = dataframe[dataframe["subtype"].str.contains("H5N6") == True] # filter for H5N6 
+    H5N8_sample = dataframe[dataframe["subtype"].str.contains("H5N8") == True] # filter for H5N8
+
+    H5N1_H5N2_U1, H5N1_H5N2_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N2_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N1_H5N3_U1, H5N1_H5N3_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N3
+                                             H5N3_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N1_H5N8_U1, H5N1_H5N8_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N2_H5N3_U1, H5N2_H5N3_p = mannwhitneyu(H5N2_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N3_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N2_H5N6_U1, H5N2_H5N6_p = mannwhitneyu(H5N2_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N2_H5N8_U1, H5N2_H5N8_p = mannwhitneyu(H5N2_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N3_H5N6_U1, H5N3_H5N6_p = mannwhitneyu(H5N3_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N3_H5N8_U1, H5N3_H5N8_p = mannwhitneyu(H5N3_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    H5N6_H5N8_U1, H5N6_H5N8_p = mannwhitneyu(H5N6_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
+                                             H5N8_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    gene = pd.unique(dataframe['gene'])[0]
+
+    # list containing tupes with each subtype sample and p value
+    stats = [
+        ('H5N1', 'H5N2', H5N1_H5N2_p),
+        ('H5N1', 'H5N3', H5N1_H5N3_p),
+        ('H5N1', 'H5N6', H5N1_H5N6_p),
+        ('H5N1', 'H5N8', H5N1_H5N8_p),
+        ('H5N2', 'H5N3', H5N2_H5N3_p),
+        ('H5N2', 'H5N6', H5N2_H5N6_p),
+        ('H5N2', 'H5N8', H5N2_H5N8_p),
+        ('H5N3', 'H5N6', H5N3_H5N6_p),
+        ('H5N3', 'H5N8', H5N3_H5N8_p),
+        ('H5N6', 'H5N8', H5N6_H5N8_p)
+        ]
+
+    return stats
+
+# Subtypes: H5N1, H5N2, and H5N6
+# Host: swine
+# Test: Mann-Whitney U rank
+def test_swine(dataframe):
+    
+    H5N1_sample = dataframe[dataframe["subtype"].str.contains("H5N1") == True] # filter for H5N1 
+    H5N6_sample = dataframe[dataframe["subtype"].str.contains("H5N6") == True] # filter for H5N6 
+    
+    H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             H5N6_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    gene = pd.unique(dataframe['gene'])[0]
+
+    # list containing tupes with each subtype sample and p value
+    stats = [
+        ('H5N1', 'H5N6', H5N1_H5N6_p)
+        ]
+
+    return stats
