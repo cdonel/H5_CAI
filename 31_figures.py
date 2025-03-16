@@ -7,10 +7,10 @@ import pandas as pd
 def main():
     read_path = 'data/cai_results/cai_results.csv' # read file location
     cai_results = utils.csv_to_df(read_path) # csv to dataframe
-    # fig_1(cai_results)
-    # fig_2(cai_results)
-    # fig_3(cai_results)
-    seq_count_to_xlsx(cai_results)
+    fig_1(cai_results)
+    fig_2(cai_results)
+    fig_3(cai_results)
+
 
 # Writes dataframe to xlsx detailing sequence counts for subtype hosts and genes.
 def seq_count_to_xlsx(cai_results): 
@@ -85,7 +85,7 @@ def fig_3(cai_results):
     cai_results = cai_results.sort_values(['subtype', 'gene']) # sort subtype then gene in ascending order
     title = 'CAI for H5N1, H5N2, H5N6, and H5N8 genes in chickens'
     x_label = 'H5N1 genes'
-    width = 0.8
+    width = 0.8 # width of box in boxplot
     fig_x_size = 17.5
     fig_y_size = 5
     write_boxplot(cai_results, 
@@ -110,6 +110,7 @@ def write_boxplot(dataframe, path, fig_x_size, fig_y_size, width, title, x_label
     sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1)) # move legend outside of plot to the center right.
     plt.xlabel(x_label) # x label
     plt.ylabel('CAI score') # y label
+    plt.ylim(0.5,0.9)
     plt.title(title) # plot title
     plt.savefig(path) # save plot
     plt.clf() # clear plot
