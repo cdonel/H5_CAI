@@ -45,46 +45,20 @@ def plot_host(cai_results, host, subtypes, min_y, max_y):
             case 'swine':
                 host_test = utils.test_swine(data)
 
-        write_boxplot(
-                        dataframe=data, 
-                        x='subtype',
-                        y='cai_score',
-                        path=write_path, 
-                        stats=host_test,
-                        fig_x_size=7.5, 
-                        fig_y_size=7.5, 
-                        title=gene, 
-                        min_y=min_y,
-                        max_y=max_y,
-                        hue='subtype'
-                        )
+        write_boxplot(dataframe=data, x='subtype', y='cai_score', path=write_path, 
+                      stats=host_test, fig_x_size=7.5, fig_y_size=7.5, 
+                      title=gene, min_y=min_y, max_y=max_y,
+                      hue='subtype')
 
 # Save boxplot produced to read path
-def write_boxplot(
-                    dataframe, 
-                    path, 
-                    stats,
-                    x,
-                    y,
-                    fig_x_size, 
-                    fig_y_size, 
-                    title, 
-                    min_y=0,
-                    max_y=1,
-                    hue='subtype'
-                    ):
+def write_boxplot(dataframe, path, stats, x, y,
+                  fig_x_size, fig_y_size, title, min_y=0,max_y=1,
+                  hue='subtype'):
 
     sns.set_theme(rc={'figure.figsize':(fig_x_size,fig_y_size)}) # set plot figure size
 
-    ax = sns.boxplot(
-                        dataframe, 
-                        x=x, 
-                        y=y, 
-                        hue=hue, 
-                        showfliers=False, 
-                        palette="Set1", 
-                        width=0.5
-                        )
+    ax = sns.boxplot(dataframe, x=x, y=y, hue=hue, showfliers=False, 
+                     palette="Set1", width=0.5)
     
     starbars.draw_annotation(stats, ns_show=False, fontsize=20, bar_gap=0.15)
     plt.ylabel('CAI score') # y label
