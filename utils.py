@@ -467,3 +467,20 @@ def test_swine(dataframe):
         ]
 
     return stats
+
+# Writes dataframe to xlsx detailing sequence counts for subtype hosts and genes.
+def seq_count_to_xlsx(cai_results): 
+    write_path = "data/plots/sequence_table.xlsx"
+    cai_results['subtype_host'] = cai_results['subtype'] + " " + cai_results['host'] # Combine subtype and hosts into one column
+    cai_results = cai_results[cai_results["gene"].str.contains("No gene") == False] # Exclude genes: No gene. Not enough data to include.
+    cai_results = cai_results.sort_values(['subtype', 'host', 'gene']) # sort subtype, host then gene in ascending order
+    seq_count = pd.DataFrame(columns=pd.unique(cai_results['gene']), index=pd.unique(cai_results['subtype_host']))
+
+    for gene in pd.unique(cai_results['gene']): # loop through list of unique genes
+
+        for subtype_host in pd.unique(cai_results['subtype_host']): # loop through list of unique subtype_hosts
+            df = cai_results[cai_results["gene"].str.contains(gene) == True] # filter for gene
+            df = df[df["subtype_host"].str.contains(subtype_host) == True] # filter for subtype_host
+            seq_count.loc[subtype_host, gene] = df.index.size # add sequence count to dataframe
+            
+    df_to_xlsx(seq_count, write_path)
