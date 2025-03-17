@@ -28,7 +28,7 @@ def get_codon_db_info(read_path):
                     accessions.append(accession) # add accession id to list
                     protein_ids.append(protein_id) # add protein id to list
                 except:
-                    print('Did not extract product for {0}'.format(accession))
+                    print('Did not extract for {0}'.format(accession))
 
     seq_info = pd.DataFrame({'accession':accessions, 'protein_id':protein_ids}) # Create dataframe with accession and protein ids
     return seq_info # Return dataframe
