@@ -21,10 +21,10 @@ URL for human codon usage index: [http://www.kazusa.or.jp/codon/cgi-bin/showcodo
 ### Section 2: H5Nx gene sequences
 1. **20_retrieve_sequences.py** retrieves sequences from nucleotide database in NCBI based on passed search terms.
 2. **21_clean_sequences.py** filters sequences on selected criteria.
-3. **22_split_sequences.py** splits the FASTA files into multiple FASTA files that are host species specific.
+3. **22_split_sequences.py** splits the FASTA file into multiple FASTA files that are host species specific.
 
 ### Section 3. Analysis
-1. **30_cai.py** scores H5Nx sequences based on host refernce genes.
+1. **30_cai.py** scores H5Nx sequences based on host reference genes.
 2. **31_figures.py** generates boxplots and caculates statistics using Mann-Whiteny U test.
 
 **Plot from analysis:**
