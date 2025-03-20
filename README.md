@@ -29,5 +29,5 @@ URL for human codon usage index: [http://www.kazusa.or.jp/codon/cgi-bin/showcodo
 
 ### Sample plot from analysis:
 
-CAI scores for hemagglutinin gene in chicken hosts for H5N1, H5N2, H5N6, and H5N8.
+CAI scores for hemagglutinin gene in chicken hosts.
 ![alt text](https://github.com/cdonel/H5_CAI/blob/main/readme_images/chicken_HA.jpeg)
