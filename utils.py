@@ -376,8 +376,6 @@ def seq_count_to_xlsx(cai_results):
             
     df_to_xlsx(seq_count, write_path)
 
-#####################################################
-
 # searches and extracts location in sequence record
 def extract_location(record):
     try:
