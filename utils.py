@@ -180,6 +180,19 @@ def cai_scores_to_df(scores, seq_records):
     df = pd.DataFrame({'cai_score':scores, 'gene':gene, 'host':host, 'subtype':subtype})
     return df
 
+# Vectors to dataframe
+def cai_vectors_to_df(vectors, seq_records):
+    subtype = []
+    gene = []
+    host = []
+    for record in seq_records:
+        subtype.append(re.search(r'subtype=(.*?)\|', record.description).group(1))
+        host.append(re.search(r'host=(.*?)\|', record.description).group(1))
+        gene.append(re.search(r'gene=(.*?)\|', record.description).group(1))
+
+    df = pd.DataFrame({'cai_vector':vectors, 'gene':gene, 'host':host, 'subtype':subtype})
+    return df
+
 # Takes list of dataframes and concatenates into single datafarame
 def concat_df(list_df):
     return pd.concat(list_df, ignore_index=True)
