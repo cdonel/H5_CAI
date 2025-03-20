@@ -1,7 +1,7 @@
 # H5_CAI
 ## BIOT670I group alpha H5 influenza codon adaptation index (CAI)
 
-The script has three distinct sections:
+There are three distinct sections:
 
 1. Retrieving and processing host reference genes into FASTA format and is denoted by scripts beginning with the number 1.
 2. Retrieving and processing H5Nx gene sequences into FASTA format and is denoted by scripts beginning with the number 2.
