@@ -1,4 +1,4 @@
-import test_utils as utils
+import utils
 import codonbias as cb
 
 def main():

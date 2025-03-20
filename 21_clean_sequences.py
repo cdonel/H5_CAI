@@ -1,5 +1,5 @@
 import re
-import test_utils as utils
+import utils
 
 def main():
     for H5 in utils.subtypes:
