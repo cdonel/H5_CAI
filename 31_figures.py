@@ -11,7 +11,7 @@ def main():
 
 # Plots standard CAI analysis. Host reference genes used are the host that the H5 strain was found in.
 def plot_standard_cai_analysis():
-    read_path = 'data/cai_results/cai_results.csv' # read file location
+    read_path = 'data/cai_results/scores_cai_results.csv' # read file location
     cai_results = utils.csv_to_df(read_path) # csv to dataframe
     plot_genes(cai_results, host='chicken', subtypes=['H5N1', 'H5N2', 'H5N6', 'H5N8'], min_y=0.7, max_y=0.9)
     plot_genes(cai_results, host='duck', subtypes=['H5N1', 'H5N2', 'H5N3', 'H5N6', 'H5N8'], min_y=0.5, max_y=0.8)
