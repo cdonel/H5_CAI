@@ -1,5 +1,5 @@
 import re
-import utils
+import test_utils as utils
 
 def main():
     for H5 in utils.subtypes:
@@ -13,11 +13,16 @@ def main():
         keep_records = check_sequence_start(seq_records, keep_records) # Check for start codon.
         keep_records = check_sequence_end(seq_records, keep_records) # Check for stop codon.
         keep_records = check_sequence_triplet(seq_records, keep_records) # Check sequence length divisible by 3.
-        keep_records = keep_term(seq_records, keep_records, term=H5) # Check for subtype term in sequence description.
-        keep_records = keep_term(seq_records, keep_records, term='Influenza A virus') # Check for subtype term in sequence description.
 
         # Where keep_records element is True add sequence to new_seq_records.
         new_seq_records = filter_seq_records(seq_records, keep_records) 
+
+        # Build new sequence descriptions
+        # Extracts subtype, host, gene, location, and sequence length
+        new_seq_records = utils.build_sequence_description(new_seq_records)
+
+        # Remove sequences that do not contain subtype or host.
+        new_seq_records = utils.remove_sequences(new_seq_records)
 
         utils.write_fasta(new_seq_records, write_path) # Write fasta file.
         print("Completed: {0} {1} sequences meet criteria.".format(len(new_seq_records), H5)) # Print number of sequences kept.
