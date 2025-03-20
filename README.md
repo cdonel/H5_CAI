@@ -5,7 +5,7 @@
 
 ![alt text](https://github.com/cdonel/H5_CAI/blob/main/readme_images/influenza_virus.jpg)
 
-**There are three distinct sections:**
+### This analysis is broken up into three distinct sections:
 
 1. Retrieving and processing host reference genes into FASTA format and is denoted by scripts beginning with the number 1.
 2. Retrieving and processing H5Nx gene sequences into FASTA format and is denoted by scripts beginning with the number 2.
@@ -21,13 +21,13 @@ URL for human codon usage index: [http://www.kazusa.or.jp/codon/cgi-bin/showcodo
 ### Section 2: H5Nx gene sequences
 1. **20_retrieve_sequences.py** retrieves sequences from nucleotide database in NCBI based on passed search terms.
 2. **21_clean_sequences.py** filters sequences on selected criteria.
-3. **22_split_sequences.py** splits the FASTA files into multiple FASTA files that are host species specific.
+3. **22_split_sequences.py** splits the FASTA file into multiple FASTA files that are host species specific.
 
-### Section 3. Analysis
-1. **30_cai.py** scores H5Nx sequences based on host refernce genes.
-2. **31_figures.py** generates boxplots and caculates statistics using Mann-Whiteny U test.
+### Section 3. Results
+1. **30_cai.py** scores H5Nx sequences based on host reference genes.
+2. **31_figures.py** generates boxplots and calculates statistics using Mann-Whiteny U test.
 
-**Plot from analysis:**
+### Sample plot from analysis:
 
-CAI scores for hemagglutinin gene in chicken hosts for H5N1, H5N2, H5N6, and H5N8.
+CAI scores for hemagglutinin gene in chicken hosts.
 ![alt text](https://github.com/cdonel/H5_CAI/blob/main/readme_images/chicken_HA.jpeg)
