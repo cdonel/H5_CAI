@@ -22,3 +22,8 @@ URL for human codon usage index: http://www.kazusa.or.jp/codon/cgi-bin/showcodon
 ### Section 3. Analysis
 1. 30_cai.py scores H5Nx sequences based on host refernce genes.
 2. Generates boxplots and caculates statistics using Mann-Whiteny U test.
+
+Example plot from analysis:
+
+CAI scores for hemagglutinin gene in chicken hosts for H5N1, H5N2, H5N6, and H5N8.
+(data/plots/chicken_strain_to_chicken_host.jpeg)
