@@ -8,4 +8,4 @@ The script has three distinct sections:
 3. Scoring CAI and plotting results  and is denoted by scripts begining with the number 3.
 
 ### Section 1: Host reference genes
-10_retrieve_codon_usage_index.py parses HTML from http://www.kazusa.or.jp/codon/.
+10_retrieve_codon_usage_index.py parses HTML from http://www.kazusa.or.jp/codon/. 
