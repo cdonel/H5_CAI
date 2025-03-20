@@ -1,5 +1,5 @@
 # H5_CAI
-## BIOT670I group alpha H5 influenza codon adaptation index (CAI)
+## BIOT670I group alpha: Influenza A H5Nx codon adaptation index (CAI) across multiple species.
 
 There are three distinct sections:
 
