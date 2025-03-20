@@ -185,12 +185,14 @@ def cai_vectors_to_df(vectors, seq_records):
     subtype = []
     gene = []
     host = []
-    for record in seq_records:
-        subtype.append(re.search(r'subtype=(.*?)\|', record.description).group(1))
-        host.append(re.search(r'host=(.*?)\|', record.description).group(1))
-        gene.append(re.search(r'gene=(.*?)\|', record.description).group(1))
-
-    df = pd.DataFrame({'cai_vector':vectors, 'gene':gene, 'host':host, 'subtype':subtype})
+    length = []
+    for i in range(0, len(seq_records)):
+        subtype.append(re.search(r'subtype=(.*?)\|', seq_records[i].description).group(1))
+        host.append(re.search(r'host=(.*?)\|', seq_records[i].description).group(1))
+        gene.append(re.search(r'gene=(.*?)\|', seq_records[i].description).group(1))
+        length.append(len(vectors[i]))
+        
+    df = pd.DataFrame({'cai_vector':vectors, 'gene':gene, 'host':host, 'subtype':subtype, 'length':length})
     return df
 
 # Takes list of dataframes and concatenates into single datafarame
@@ -414,7 +416,7 @@ def extract_host(record):
 # searches and extracts subtype in sequence record
 def extract_subtype(record):
     try:
-        pattern = r'(H\dN\d)'
+        pattern = r'(H5N\d)'
         subtype = re.search(pattern, record.description).group(1)
 
     except:
