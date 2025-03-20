@@ -1,6 +1,9 @@
 # H5_CAI
 ## BIOT670I group alpha: Influenza A H5Nx codon adaptation index (CAI) across multiple species.
 
+**Influenza viral structure**
+![alt text](https://github.com/cdonel/H5_CAI/blob/main/readme_images/influenza_virus.jpg)
+
 There are three distinct sections:
 
 1. Retrieving and processing host reference genes into FASTA format and is denoted by scripts beginning with the number 1.
