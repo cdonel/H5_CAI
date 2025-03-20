@@ -21,7 +21,7 @@ URL for human codon usage index: [http://www.kazusa.or.jp/codon/cgi-bin/showcodo
 
 ### Section 3. Analysis
 1. 30_cai.py scores H5Nx sequences based on host refernce genes.
-2. Generates boxplots and caculates statistics using Mann-Whiteny U test.
+2. 31_figures.py generates boxplots and caculates statistics using Mann-Whiteny U test.
 
 Example plot from analysis:
 
