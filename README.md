@@ -9,7 +9,7 @@ The script has three distinct sections:
 
 ### Section 1: Host reference genes
 1. 10_retrieve_codon_usage_index.py parses HTML from http://www.kazusa.or.jp/codon/ which contains codon usage indexes for many species. 
-URL for human codon usage index: http://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?species=9606
+URL for human codon usage index: [http://www.kazusa.or.jp/codon/cgi-bin/showcodon.cgi?species=9606](http://www.kazusa.or.jp/codon/current/species/9606)
 2. 11_parse_codon_usage_index.py extracts the accession and protein ids from the codon usage index.
 3. 12_retrieve_genbank.py uses the accession id to retrieve genbank records from NCBI.
 4. 13_genbank_to_fasta.py uses the protein id to extract the correct cds from each genbank record.
