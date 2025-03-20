@@ -1,8 +1,8 @@
 # H5_CAI
-BIOT670I group alpha H5 influenza codon adaptation index (CAI)
+## BIOT670I group alpha H5 influenza codon adaptation index (CAI)
 
-Scripts 10, 11, 12, and 13 deal with preparing host reference genes.
+The script has three separate phases:
 
-Scripts 20, 21, and 22 deal with preparing H5NX genes.
-
-Scripts 30 and 31 deal with analysis and plotting.
+1. Retrieving and processing host reference genes into FASTA format.
+2. Retrieving and processing H5Nx gene sequences into FASTA format.
+3. Scoring CAI and plotting results.
