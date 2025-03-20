@@ -5,7 +5,7 @@
 
 ![alt text](https://github.com/cdonel/H5_CAI/blob/main/readme_images/influenza_virus.jpg)
 
-**This analysis is broken up into three distinct sections:**
+### This analysis is broken up into three distinct sections:
 
 1. Retrieving and processing host reference genes into FASTA format and is denoted by scripts beginning with the number 1.
 2. Retrieving and processing H5Nx gene sequences into FASTA format and is denoted by scripts beginning with the number 2.
