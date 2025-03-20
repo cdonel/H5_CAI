@@ -1,7 +1,12 @@
-import utils
+import test_utils as utils
 import codonbias as cb
 
 def main():
+    standard_cai_analysis()
+
+# Measures CAI of gene found in host to the host's reference genes.
+# Example: H5N1 found in duck is score against duck reference genes.
+def standard_cai_analysis():
     write_path = "data/cai_results/cai_results.csv"
     results = [] # Empty list for adding dataframe containing scores from each host and each subtype.
     for host in utils.host_names:
@@ -13,14 +18,12 @@ def main():
             try:
                 read_path_H5 = "data/subtype_sequences/{0}/02_{0}_{1}.fasta".format(H5, host) # read file location
                 seq_records = utils.read_fasta(read_path_H5) # List of sequence records
-                genes = utils.get_H5_gene_names(seq_records)
                 scores = score_seqs_cai(cai_model, seq_records) # List containing scores for each sequence
-                scores_df = utils.cai_scores_to_df(scores, H5, host, genes) # Dataframe containing scores, H5 subtype, and host name
+                scores_df = utils.cai_scores_to_df(scores, seq_records) # Dataframe containing scores, H5 subtype, and host name
                 results.append(scores_df) # Add dataframe to results list
             
-            except:
-                print("02_{0}_{1}.fasta file not found.".format(H5, host))
-
+            except Exception as e:
+                pass
 
     cai_results = utils.concat_df(results) # Combine dataframes with cai scores into one.
     utils.df_to_csv(cai_results, write_path) # Write dataframe to csv
