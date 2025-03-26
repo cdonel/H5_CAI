@@ -1,7 +1,7 @@
 import utils
 import re
 
-def main():
+def run():
     for H5 in utils.subtypes:
         read_path = 'data/subtype_sequences/{0}/01_{0}.fasta'.format(H5) # Input file location
         seq_records = utils.read_fasta(read_path) # Read fasta file
@@ -29,4 +29,4 @@ def split_sequences(seq_records, host):
 
 
 if __name__ == "__main__":
-    main()
+    run()

@@ -1,7 +1,7 @@
 from Bio.SeqRecord import SeqRecord
 import utils
 
-def main():
+def run():
     for host in utils.host_names:
         try:
             read_path_gb = "data/genbank/{0}.gb".format(host) # read file location for genbank
@@ -52,4 +52,4 @@ def get_genbank_cds(gb_records, seq_info):
     return seq_records # Return list of sequence records
 
 if __name__ == '__main__':
-    main()
+    run()

@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import utils
 
-def main():
+def run():
     for host, url in utils.codon_usage_index_urls.items(): # Loops through dictionary containing host name and URL
         write_path = "data/codon_usage_database/{0}.txt".format(host) # Destination of output fil
         condon_usage_index = get_codon_usage_index(url) # Codon usage index scraped from web data using URL
@@ -16,4 +16,4 @@ def get_codon_usage_index(url):
     return soup.text
     
 if __name__ =="__main__":
-    main()
+    run()

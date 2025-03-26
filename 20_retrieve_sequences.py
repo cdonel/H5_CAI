@@ -2,7 +2,7 @@ from Bio import Entrez
 from config import email
 from utils import subtypes
 
-def main():
+def run():
     # Provide user email for NCBI account.
     Entrez.email = email
 
@@ -50,4 +50,4 @@ def get_sequences(acc_list, webenv, query_key, H5):
     print("Created 00_{0}_raw.fasta.".format(H5))
 
 if __name__ == "__main__":
-    main()
+    run()

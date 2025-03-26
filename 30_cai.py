@@ -2,7 +2,7 @@ import utils
 import codonbias as cb
 import numpy as np
 
-def main():
+def run():
     standard_cai_analysis()
 
 # Measures CAI of gene found in host to the host's reference genes.
@@ -28,7 +28,7 @@ def standard_cai_analysis():
                 vector_results.append(vectors_df)
             
             except Exception as e:
-                pass
+                print(e)
 
     mean_cai_results = utils.concat_df(mean_results) # Combine dataframes with cai scores into one.
     vector_cai_results = utils.concat_df(vector_results)
@@ -46,13 +46,11 @@ def score_seqs_cai(cai_model, seq_records):
     seqs = [str(record.seq) for record in seq_records]
     scores = cai_model.get_score(seqs)
     vectors = cai_model.get_vector(seqs)
-    for vector in vectors:
-        vector = vector[~np.isnan(vector)]
+    vectors = [vector[~np.isnan(vector)] for vector in vectors]
     return scores, vectors
 
-
 if __name__ == "__main__":
-    main()
+    run()
 
 
 

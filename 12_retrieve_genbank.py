@@ -1,6 +1,6 @@
 import utils
 
-def main():
+def run():
     for host in utils.host_names:
         try:
             read_path = "data/genbank/host_info/{0}.csv".format(host) # Input file location
@@ -14,4 +14,4 @@ def main():
             print("No host csv file for {0}.".format(host))
 
 if __name__ == '__main__':
-    main()
+    run()

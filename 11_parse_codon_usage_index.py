@@ -2,7 +2,7 @@ import utils
 import re
 import pandas as pd
 
-def main():
+def run():
     for host in utils.host_names:
         try:
             read_path = "data/codon_usage_database/{0}.txt".format(host) # Read text file
@@ -34,4 +34,4 @@ def get_codon_db_info(read_path):
     return seq_info # Return dataframe
                 
 if __name__ == '__main__':
-    main()
+    run()
