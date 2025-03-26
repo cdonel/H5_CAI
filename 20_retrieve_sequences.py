@@ -3,6 +3,7 @@ from config import email
 from utils import subtypes
 
 def run():
+    print('Running: Retrieving H5Nx sequences from NCBI nucleotide database.')
     # Provide user email for NCBI account.
     Entrez.email = email
 

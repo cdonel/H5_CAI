@@ -2,6 +2,7 @@ import utils
 import re
 
 def run():
+    print('Running: Separating H5Nx sequences by host.')
     for H5 in utils.subtypes:
         read_path = 'data/subtype_sequences/{0}/01_{0}.fasta'.format(H5) # Input file location
         seq_records = utils.read_fasta(read_path) # Read fasta file

@@ -3,6 +3,7 @@ import re
 import pandas as pd
 
 def run():
+    print('Running: Parse codon usage index.')
     for host in utils.host_names:
         try:
             read_path = "data/codon_usage_database/{0}.txt".format(host) # Read text file

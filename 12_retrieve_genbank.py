@@ -1,6 +1,7 @@
 import utils
 
 def run():
+    print('Running: Retrieve getbank records.')
     for host in utils.host_names:
         try:
             read_path = "data/genbank/host_info/{0}.csv".format(host) # Input file location

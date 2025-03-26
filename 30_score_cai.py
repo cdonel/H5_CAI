@@ -3,6 +3,7 @@ import codonbias as cb
 import numpy as np
 
 def run():
+    print('Running: Scoring sequences for CAI.')
     standard_cai_analysis()
 
 # Measures CAI of gene found in host to the host's reference genes.

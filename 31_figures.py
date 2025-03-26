@@ -6,6 +6,7 @@ import starbars
 
 
 def run():
+    print('Running: Creating plots.')
     plot_standard_cai_analysis()
 
 

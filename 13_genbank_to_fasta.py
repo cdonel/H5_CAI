@@ -2,6 +2,7 @@ from Bio.SeqRecord import SeqRecord
 import utils
 
 def run():
+    print('Running: Converting genbank to fasta.')
     for host in utils.host_names:
         try:
             read_path_gb = "data/genbank/{0}.gb".format(host) # read file location for genbank
