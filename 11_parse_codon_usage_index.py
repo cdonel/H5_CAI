@@ -33,5 +33,3 @@ def get_codon_db_info(read_path):
     seq_info = pd.DataFrame({'accession':accessions, 'protein_id':protein_ids}) # Create dataframe with accession and protein ids
     return seq_info # Return dataframe
                 
-if __name__ == '__main__':
-    run()

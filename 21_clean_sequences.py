@@ -98,6 +98,3 @@ def check_sequence_triplet(seq_records, keep_records):
         else:
             pass
     return keep_records
-
-if __name__ == "__main__":
-    run()

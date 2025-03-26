@@ -50,6 +50,3 @@ def get_genbank_cds(gb_records, seq_info):
                             print("{0} was not added to sequence records".format(protein_id))
     
     return seq_records # Return list of sequence records
-
-if __name__ == '__main__':
-    run()

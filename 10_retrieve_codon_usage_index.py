@@ -15,5 +15,3 @@ def get_codon_usage_index(url):
     soup = BeautifulSoup(r.content, 'html.parser')
     return soup.text
     
-if __name__ =="__main__":
-    run()

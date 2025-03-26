@@ -49,9 +49,6 @@ def score_seqs_cai(cai_model, seq_records):
     vectors = [vector[~np.isnan(vector)] for vector in vectors]
     return scores, vectors
 
-if __name__ == "__main__":
-    run()
-
 
 
 

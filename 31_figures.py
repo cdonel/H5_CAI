@@ -130,5 +130,3 @@ def plot_genes(cai_results, host, subtypes, min_y, max_y, bar_gap, strain_host=N
                       title=gene, min_y=min_y, max_y=max_y,
                       hue='subtype', bar_gap=bar_gap)
 
-if __name__ == "__main__":
-    run()

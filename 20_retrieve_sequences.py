@@ -49,5 +49,3 @@ def get_sequences(acc_list, webenv, query_key, H5):
     output.close()
     print("Created 00_{0}_raw.fasta.".format(H5))
 
-if __name__ == "__main__":
-    run()

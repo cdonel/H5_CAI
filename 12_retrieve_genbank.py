@@ -13,5 +13,3 @@ def run():
         except:
             print("No host csv file for {0}.".format(host))
 
-if __name__ == '__main__':
-    run()

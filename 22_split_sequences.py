@@ -27,6 +27,3 @@ def split_sequences(seq_records, host):
 
     return new_seq_records
 
-
-if __name__ == "__main__":
-    run()
