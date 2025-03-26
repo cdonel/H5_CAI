@@ -182,6 +182,8 @@ def cai_scores_to_df(scores, seq_records):
 
 # Vectors to dataframe
 def cai_vectors_to_df(vectors, seq_records):
+    vector_df = pd.DataFrame(columns=['cai_vector'])
+    vector_df['cai_vector'] = vector_df['cai_vector'].astype(object)
     subtype = []
     gene = []
     host = []
@@ -191,8 +193,11 @@ def cai_vectors_to_df(vectors, seq_records):
         host.append(re.search(r'host=(.*?)\|', seq_records[i].description).group(1))
         gene.append(re.search(r'gene=(.*?)\|', seq_records[i].description).group(1))
         length.append(len(vectors[i]))
+        vector_df.loc[i, 'cai_vector'] = vectors[i]
         
-    df = pd.DataFrame({'cai_vector':vectors, 'gene':gene, 'host':host, 'subtype':subtype, 'length':length})
+    df = pd.DataFrame({'gene':gene, 'host':host, 'subtype':subtype, 'length':length})
+    df['cai_vector'] = vector_df['cai_vector'].astype(object)
+  
     return df
 
 # Takes list of dataframes and concatenates into single datafarame
@@ -277,9 +282,6 @@ def test_human(dataframe):
     H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
                                              H5N6_sample['cai_score'].to_list(), 
                                              method="exact")
-    
-    
-    gene = pd.unique(dataframe['gene'])[0]
 
     stats = [('H5N1', 'H5N6', H5N1_H5N6_p)] # list containing tupes with each subtype sample and p value
 
@@ -335,8 +337,6 @@ def test_duck(dataframe):
     H5N6_H5N8_U1, H5N6_H5N8_p = mannwhitneyu(H5N6_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N2
                                              H5N8_sample['cai_score'].to_list(), 
                                              method="exact")
-    
-    gene = pd.unique(dataframe['gene'])[0]
 
     # list containing tupes with each subtype sample and p value
     stats = [
@@ -365,14 +365,78 @@ def test_swine(dataframe):
     H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
                                              H5N6_sample['cai_score'].to_list(), 
                                              method="exact")
-    
-    gene = pd.unique(dataframe['gene'])[0]
 
     # list containing tupes with each subtype sample and p value
     stats = [
         ('H5N1', 'H5N6', H5N1_H5N6_p)
         ]
 
+    return stats
+
+def test_H5N1(dataframe):
+    bovine_sample = dataframe[dataframe["host"].str.contains("bovine") == True] # filter for bovine 
+    chicken_sample = dataframe[dataframe["host"].str.contains("chicken") == True] # filter for bovine 
+    human_sample = dataframe[dataframe["host"].str.contains("human") == True] # filter for bovine 
+    swine_sample = dataframe[dataframe["host"].str.contains("swine") == True] # filter for bovine 
+
+    bovine_chicken_U1, bovine_chicken_p = mannwhitneyu(bovine_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             chicken_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    bovine_human_U1, bovine_human_p = mannwhitneyu(bovine_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             human_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    bovine_swine_U1, bovine_swine_p = mannwhitneyu(bovine_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             swine_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    chicken_human_U1, chicken_human_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             human_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    chicken_swine_U1, chicken_swine_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             swine_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    human_swine_U1, human_swine_p = mannwhitneyu(human_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             swine_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    stats = [
+        ('bovine', 'chicken', bovine_chicken_p),
+        ('bovine', 'human', bovine_human_p),
+        ('bovine', 'swine', bovine_swine_p),
+        ('chicken', 'human', chicken_human_p),
+        ('chicken', 'swine', chicken_swine_p),
+        ('human', 'swine', human_swine_p),
+        ]
+    
+    return stats
+
+def test_H5N6(dataframe):
+    chicken_sample = dataframe[dataframe["host"].str.contains("chicken") == True] # filter for bovine 
+    human_sample = dataframe[dataframe["host"].str.contains("human") == True] # filter for bovine 
+    swine_sample = dataframe[dataframe["host"].str.contains("swine") == True] # filter for bovine 
+    
+    chicken_human_U1, chicken_human_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             human_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    chicken_swine_U1, chicken_swine_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             swine_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    human_swine_U1, human_swine_p = mannwhitneyu(human_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
+                                             swine_sample['cai_score'].to_list(), 
+                                             method="exact")
+    
+    stats = [
+        ('chicken', 'human', chicken_human_p),
+        ('chicken', 'swine', chicken_swine_p),
+        ('human', 'swine', human_swine_p),
+        ]
+    
     return stats
 
 # Writes dataframe to xlsx detailing sequence counts for subtype hosts and genes.
@@ -582,3 +646,64 @@ def remove_sequences(seq_records):
             new_seq_records.append(record)
 
     return new_seq_records
+
+# Retrieves sequences to perform phylogenetic analysis. At most 15 samples per host-strain-gene.
+def get_phylogenetic_sequences():
+    for gene in ['HA', 'NA', 'NP', 'PA', 'PB1', 'PB2']:
+        write_path = 'data/subtype_sequences/phylogenetic_sequences/H5Nx_{0}.fasta'.format(gene)
+    with open(write_path, 'w') as output_handle:
+        new_seq_records = []
+        for subtype in  subtypes:
+            for host in ['chicken', 'bovine', 'human', 'swine']:
+
+                try:
+                    read_path = 'data/subtype_sequences/{0}/02_{0}_{1}.fasta'.format(subtype, host)
+                    seq_records = read_fasta(read_path)
+                    count = 0
+                    for record in seq_records:
+                        if count < 15:
+                            if re.search(r'gene={0}'.format(gene), record.description):
+                                record.description = '{0}_{1}_{2}'.format(subtype, host, record.name)
+                                new_seq_records.append(record)
+                                count += 1
+
+                except:
+                    pass
+
+        for record in new_seq_records:
+            output_handle.write('>{0}\n'.format(record.description))
+            output_handle.write(str(record.seq) + '\n')
+
+# Write host names and occurences to csv file.
+def write_hosts():
+    for H5 in subtypes:
+        read_path = "data/subtype_sequences/{0}/01_{0}.fasta".format(H5) # read file location
+        write_path = "data/subtype_sequences/H5_hosts/{0}_hosts.csv".format(H5) # write file destination
+        seq_records = read_fasta(read_path) # read fasta sequences
+        host_df = get_hosts(seq_records) # Extract host name and number of times it occurs into dataframe.
+        # seq_records = standardize_seq_records_hosts(seq_records) # Standardize host names in seq record description
+        df_to_csv(host_df, write_path) # Write dataframe to csv
+
+# Get host names and occurences from sequence description and return in dataframe.
+def get_hosts(seq_records):
+    temp_list = []
+    for i in range(0, len(seq_records)):
+        record = seq_records[i]
+
+        # Extract host name from sequence description using regular expression.
+        # Standardize host name for duck, chicken, swine, bovine, and human in record_description.
+        try:
+            host_name = re.search(r'A/(.*?)/', record.description).group(1)
+            temp_list.append(host_name)
+            
+        except:
+            print("No host extracted for {0}.".format(record.name))
+
+    host_df = pd.DataFrame({'host_organism':list(set(temp_list))})
+
+
+    # Count occurence of host names extract to get number of sequences for host.
+    for i in range(0, host_df['host_organism'].size):
+        host_df.loc[i, 'seq_count'] = int(temp_list.count(host_df.loc[i, 'host_organism']))
+    
+    return host_df
