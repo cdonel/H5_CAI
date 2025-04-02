@@ -145,6 +145,3 @@ def plot_genes(cai_results, host, subtypes, min_y, max_y, bar_gap, strain_host=N
                       stats=host_test, fig_x_size=7.5, fig_y_size=7.5, 
                       title=gene, min_y=min_y, max_y=max_y,
                       hue='subtype', bar_gap=bar_gap)
-
-
-run()
