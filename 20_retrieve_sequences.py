@@ -2,16 +2,15 @@ from Bio import Entrez
 from config import email
 from utils import subtypes
 
-def run():
+def run(H5):
     print('Running: Retrieving H5Nx sequences from NCBI nucleotide database.')
     # Provide user email for NCBI account.
     Entrez.email = email
 
-    # Uses each H5 subtype as the search term in NCBI's nucleotide database
+    # Uses H5 subtype as the search term in NCBI's nucleotide database
     # and writes sequences to fasta file.
-    for H5 in subtypes:
-        acc_list, webenv, query_key = get_stream_data(H5)
-        get_sequences(acc_list, webenv, query_key, H5)
+    acc_list, webenv, query_key = get_stream_data(H5)
+    get_sequences(acc_list, webenv, query_key, H5)
 
 # Return NCBI stream data. Ideal when dealing with many sequences.
 def get_stream_data(H5):

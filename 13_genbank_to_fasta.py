@@ -1,20 +1,19 @@
 from Bio.SeqRecord import SeqRecord
 import utils
 
-def run():
+def run(host):
     print('Running: Converting genbank to fasta.')
-    for host in utils.host_names:
-        try:
-            read_path_gb = "data/genbank/{0}.gb".format(host) # read file location for genbank
-            read_path_csv = "data/genbank/host_info/{0}.csv".format(host) # read file location for csv
-            write_path = "data/host_sequences/{0}.fasta".format(host) # Write file destination
-            gb_records = utils.read_genbank(read_path_gb) # read genbank
-            seq_info = utils.csv_to_df(read_path_csv) # read csv
-            seq_records = get_genbank_cds(gb_records, seq_info) # List containing sequences retrieve from genbank records
-            utils.write_fasta(seq_records, write_path) # Write fasta file
-        
-        except:
-            print("No genbank file found for {0}.".format(host))
+    try:
+        read_path_gb = "data/genbank/{0}.gb".format(host) # read file location for genbank
+        read_path_csv = "data/genbank/host_info/{0}.csv".format(host) # read file location for csv
+        write_path = "data/host_sequences/{0}.fasta".format(host) # Write file destination
+        gb_records = utils.read_genbank(read_path_gb) # read genbank
+        seq_info = utils.csv_to_df(read_path_csv) # read csv
+        seq_records = get_genbank_cds(gb_records, seq_info) # List containing sequences retrieve from genbank records
+        utils.write_fasta(seq_records, write_path) # Write fasta file
+    
+    except:
+        print("No genbank file found for {0}.".format(host))
 
 # Takes genbank records, extracts cds, and builds sequence record.
 # Looks for genbank records using CSV file built with 6_get_genbank.py

@@ -2,16 +2,17 @@ import utils
 import re
 import pandas as pd
 
-def run():
+def run(host=None):
     print('Running: Parse codon usage index.')
-    for host in utils.host_names:
-        try:
-            read_path = "data/codon_usage_database/{0}.txt".format(host) # Read text file
-            write_path = "data/genbank/host_info/{0}.csv".format(host) # Write file destination
-            seq_info = get_codon_db_info(read_path) # Dataframe with accession ids and protein ids
-            utils.df_to_csv(seq_info, write_path) # Write dataframe to CSV
-        except:
-            print("No {0}.txt file found.".format(host))
+    
+    try:
+        read_path = "data/codon_usage_database/{0}.txt".format(host) # Read text file
+        write_path = "data/genbank/host_info/{0}.csv".format(host) # Write file destination
+        seq_info = get_codon_db_info(read_path) # Dataframe with accession ids and protein ids
+        utils.df_to_csv(seq_info, write_path) # Write dataframe to CSV
+    except:
+        print("No {0}.txt file found.".format(host))
+
 
 # Parse accession id and protein id from codon usage database text file.
 # Opens text file and reads by line. Uses regex to find IDs.

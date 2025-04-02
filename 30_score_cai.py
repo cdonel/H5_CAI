@@ -29,7 +29,7 @@ def standard_cai_analysis():
                 vector_results.append(vectors_df)
             
             except Exception as e:
-                print(e)
+                pass
 
     mean_cai_results = utils.concat_df(mean_results) # Combine dataframes with cai scores into one.
     vector_cai_results = utils.concat_df(vector_results)

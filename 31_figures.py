@@ -11,9 +11,11 @@ def run():
 
 
 # Plots standard CAI analysis. Host reference genes used are the host that the H5 strain was found in.
-def plot_standard_cai_analysis(style=None):
+def plot_standard_cai_analysis():
     read_path = 'data/cai_results/scores_cai_results.csv' # read file location
     cai_results = utils.csv_to_df(read_path) # csv to dataframe
+
+    plot_hosts(cai_results, min_y=0.5, max_y=1, bar_gap=0.01)
 
     # Plot specific subtype selecting which hosts.
     plot_subtype(cai_results, 'H5N1', ['bovine', 'chicken', 'human', 'swine'], min_y=0.55, max_y=1, bar_gap=0.01)
@@ -43,6 +45,19 @@ def boxplot_genes(dataframe, path, stats, x, y,
     plt.tick_params(axis='both', which='major', labelsize=12)
     plt.savefig(path)
     plt.clf() # clear plot data
+
+def plot_hosts(cai_results, min_y, max_y, bar_gap):
+    data = cai_results[cai_results["gene"].str.contains("None") == False] # exlcude genes that have no annotation.
+    data = data[data["host"].str.contains("duck") == False] # exlcude genes that have no annotation.
+    write_path = "data/plots/only_hosts.jpeg"
+    title = 'H5Nx CAI across multiple host species.'
+    test_hosts = utils.test_hosts(data)
+
+    print("Plotting...")
+    boxplot_genes(dataframe=data, x='host', y='cai_score', path=write_path, 
+                      stats=test_hosts, fig_x_size=7.5, fig_y_size=7.5, 
+                      title=title, min_y=min_y, max_y=max_y,
+                      hue='host', bar_gap=bar_gap)
 
 def plot_subtype(cai_results, subtype, hosts, min_y, max_y, bar_gap):
     cai_results = cai_results[cai_results["gene"].str.contains("None|MP|NS") == False] # exlcude no gene, MP, and NS genes.
@@ -131,3 +146,5 @@ def plot_genes(cai_results, host, subtypes, min_y, max_y, bar_gap, strain_host=N
                       title=gene, min_y=min_y, max_y=max_y,
                       hue='subtype', bar_gap=bar_gap)
 
+
+run()

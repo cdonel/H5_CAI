@@ -280,8 +280,7 @@ def test_human(dataframe):
     H5N6_sample = dataframe[dataframe["subtype"].str.contains("H5N6") == True] # filter for H5N6 
 
     H5N1_H5N6_U1, H5N1_H5N6_p = mannwhitneyu(H5N1_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
-                                             H5N6_sample['cai_score'].to_list(), 
-                                             method="exact")
+                                             H5N6_sample['cai_score'].to_list())
 
     stats = [('H5N1', 'H5N6', H5N1_H5N6_p)] # list containing tupes with each subtype sample and p value
 
@@ -409,15 +408,15 @@ def test_H5N1(dataframe):
         ('bovine', 'swine', bovine_swine_p),
         ('chicken', 'human', chicken_human_p),
         ('chicken', 'swine', chicken_swine_p),
-        ('human', 'swine', human_swine_p),
+        ('human', 'swine', human_swine_p)
         ]
     
     return stats
 
 def test_H5N6(dataframe):
-    chicken_sample = dataframe[dataframe["host"].str.contains("chicken") == True] # filter for bovine 
-    human_sample = dataframe[dataframe["host"].str.contains("human") == True] # filter for bovine 
-    swine_sample = dataframe[dataframe["host"].str.contains("swine") == True] # filter for bovine 
+    chicken_sample = dataframe[dataframe["host"].str.contains("chicken") == True] # filter for chicken 
+    human_sample = dataframe[dataframe["host"].str.contains("human") == True] # filter for human 
+    swine_sample = dataframe[dataframe["host"].str.contains("swine") == True] # filter for swine 
     
     chicken_human_U1, chicken_human_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), # perform rank sum test between H5N1 and H5N6
                                              human_sample['cai_score'].to_list(), 
@@ -434,7 +433,49 @@ def test_H5N6(dataframe):
     stats = [
         ('chicken', 'human', chicken_human_p),
         ('chicken', 'swine', chicken_swine_p),
-        ('human', 'swine', human_swine_p),
+        ('human', 'swine', human_swine_p)
+        ]
+    
+    return stats
+
+def test_hosts(dataframe):
+    bovine_sample = dataframe[dataframe["host"].str.contains("bovine") == True] # filter for bovine 
+    chicken_sample = dataframe[dataframe["host"].str.contains("chicken") == True] # filter for chicken 
+    duck_sample = dataframe[dataframe["host"].str.contains("duck") == True] # filter for duck
+    human_sample = dataframe[dataframe["host"].str.contains("human") == True] # filter for human 
+    swine_sample = dataframe[dataframe["host"].str.contains("swine") == True] # filter for swine 
+
+    print('Testing: Bovine against chicken.')
+    bovine_chicken_U1, bovine_chicken_p = mannwhitneyu(bovine_sample['cai_score'].to_list(),
+                                             chicken_sample['cai_score'].to_list())
+    
+    print('Testing: Bovine against human.')
+    bovine_human_U1, bovine_human_p = mannwhitneyu(bovine_sample['cai_score'].to_list(),
+                                             human_sample['cai_score'].to_list())
+
+    print('Testing: Bovine against swine.')
+    bovine_swine_U1, bovine_swine_p = mannwhitneyu(bovine_sample['cai_score'].to_list(),
+                                             swine_sample['cai_score'].to_list())
+
+    print('Testing: Chicken against human.')
+    chicken_human_U1, chicken_human_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), 
+                                             human_sample['cai_score'].to_list())
+
+    print('Testing: chicken against swine.')
+    chicken_swine_U1, chicken_swine_p = mannwhitneyu(chicken_sample['cai_score'].to_list(), 
+                                             swine_sample['cai_score'].to_list())
+
+    print('Testing: human against swine.')
+    human_swine_U1, human_swine_p = mannwhitneyu(human_sample['cai_score'].to_list(), 
+                                             swine_sample['cai_score'].to_list())
+    
+    stats = [
+        ('bovine', 'chicken', bovine_chicken_p),
+        ('bovine', 'human', bovine_human_p),
+        ('bovine', 'swine', bovine_swine_p),
+        ('chicken', 'human', chicken_human_p),
+        ('chicken', 'swine', chicken_swine_p),
+        ('human', 'swine', human_swine_p)
         ]
     
     return stats

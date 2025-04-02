@@ -3,6 +3,7 @@ import utils
 
 def run():
     print('Running: Cleaning H5Nx sequences.')
+
     for H5 in utils.subtypes:
         read_path = "data/subtype_sequences/{0}/00_{0}_raw.fasta".format(H5) # read file location
         write_path = "data/subtype_sequences/{0}/01_{0}.fasta".format(H5) # output file destination
